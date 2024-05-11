@@ -21,9 +21,9 @@ public class WeatherRestRepository {
 
     // TODO : Separate the base URL and the file ID
     // TODO : Base URL as a Spring property
-    final String BASE_URL = "https://object.files.data.gouv.fr/meteofrance/data/synchro_ftp/BASE/QUOT/";
-    final String PATTERN_STANDARD_DAILY_REPORT_FILENAME = "Q_{0,number,#}_latest-{1,number,#}-{2,number,#}_RR-T-Vent.csv.gz";
-    final String PATTERN_OTHER_DAILY_REPORT_FILENAME = "Q_{0,number,#}_latest-{1,number,#}-{2,number,#}_autres-parametres.csv.gz";
+    final String BASE_URL = "https://object.files.data.gouv.fr/meteofrance/data/synchro_ftp/BASE/QUOT";
+    final String PATTERN_STANDARD_DAILY_REPORT_FILENAME = "{0}/Q_{1,number,#}_latest-{2,number,#}-{3,number,#}_RR-T-Vent.csv.gz";
+    final String PATTERN_OTHER_DAILY_REPORT_FILENAME = "{0}/Q_{1,number,#}_latest-{2,number,#}-{3,number,#}_autres-parametres.csv.gz";
 
     private final WeatherReportConverter weatherReportConverter;
     private final RestTemplate restTemplate;
@@ -39,9 +39,9 @@ public class WeatherRestRepository {
         var currentYear = date.getYear();
         var lastYear = date.minusYears(1).getYear();
 
-        final File standardDailyReportFile = this.restTemplate.execute(BASE_URL + MessageFormat.format(PATTERN_STANDARD_DAILY_REPORT_FILENAME, departement, lastYear, currentYear), HttpMethod.GET, null, new GZFileExtractor());
+        final File standardDailyReportFile = this.restTemplate.execute(MessageFormat.format(PATTERN_STANDARD_DAILY_REPORT_FILENAME, BASE_URL, departement, lastYear, currentYear), HttpMethod.GET, null, new GZFileExtractor());
         var standardDailyParameters = this.weatherReportConverter.convertFromCSVToEntity(standardDailyReportFile, stationsName, StandardDailyParametersEntity.class);
-        final File otherDailyReportFile = this.restTemplate.execute(MessageFormat.format(BASE_URL + PATTERN_OTHER_DAILY_REPORT_FILENAME, departement, lastYear, currentYear), HttpMethod.GET, null, new GZFileExtractor());
+        final File otherDailyReportFile = this.restTemplate.execute(MessageFormat.format(PATTERN_OTHER_DAILY_REPORT_FILENAME, BASE_URL, departement, lastYear, currentYear), HttpMethod.GET, null, new GZFileExtractor());
         var otherDailyParameters = this.weatherReportConverter.convertFromCSVToEntity(otherDailyReportFile, stationsName, OtherDailyParametersEntity.class);
 
         // Data aggregation, cleaning and formatting

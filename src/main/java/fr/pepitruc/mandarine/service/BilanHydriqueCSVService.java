@@ -16,6 +16,7 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.MessageFormat;
 import java.time.LocalTime;
 import java.util.Collection;
 import java.util.List;
@@ -34,9 +35,10 @@ public class BilanHydriqueCSVService {
                 .sorted()
                 .toList();
 
-        var dirPath = Files.createDirectories(Paths.get("./Bilan Hydrique"));
-        var time = LocalTime.now();
-        var generatedFile = Files.createFile(Paths.get(dirPath.toString(), STR."/\{departement}_\{StringUtils.join(stationsName, '-')}_\{time.getHour()}h\{time.getMinute()}m\{time.getSecond()}s.csv"));
+        final var pattern = "{0}_{1}_{2}h{3}m{4}s.csv";
+        final var dirPath = Files.createDirectories(Paths.get("./Bilan Hydrique"));
+        final var time = LocalTime.now();
+        final var generatedFile = Files.createFile(Paths.get(dirPath.toString(), MessageFormat.format(pattern, departement, StringUtils.join(stationsName, '-'), time.getHour(), time.getMinute(), time.getSecond())));
 
         try (final Writer writer = new FileWriter(generatedFile.toFile())) {
 

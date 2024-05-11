@@ -5,6 +5,7 @@ import org.springframework.shell.command.annotation.Command;
 import org.springframework.shell.command.annotation.Option;
 
 import java.nio.file.Path;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class WeatherCommand {
 
         try {
             final Path generatedBilanHydriqueFile = this.weatherService.generateBilanHydrique(departement, stationsName);
-            message = STR."Le bilan hydrique a été généré et enregistré sous ./Bilan Hydrique/\"\{generatedBilanHydriqueFile.getFileName().toString()}\"";
+            message = MessageFormat.format("Le bilan hydrique a été généré et enregistré sous ./Bilan Hydrique/{0}", generatedBilanHydriqueFile.getFileName().toString());
         } catch (final Exception e) {
             message = "Le bilan hydrique n'a pas pû être généré, demandez à Julien pourquoi (le nullos, il code avec le cul) !";
         }
