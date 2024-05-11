@@ -6,7 +6,6 @@ import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.Collections;
 
 public class WeatherRestRepositoryTest {
 
