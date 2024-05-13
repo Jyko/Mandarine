@@ -1,6 +1,8 @@
-name: Publish
+name: Release
 
-on: workflow_dispatch
+on:
+  push:
+    tags: ['v*']
 
 jobs:
   publish:
@@ -9,12 +11,23 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
-      - name: Publish package
-        run: mvn --batch-mode deploy -DskipTests
+      - name: Build
+        run: mvn clean package -DskipTests
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Pwd
+        run: pwd
+      - name: Release
+        uses: ncipollo/release-action@v1.14.0
+        with:
+          name: ${{ env.GITHUB_REF_NAME }}
+          tag: ${{ env.GITHUB_REF_NAME }}
+          artifacts: "target/*.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
