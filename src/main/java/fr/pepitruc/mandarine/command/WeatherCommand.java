@@ -19,7 +19,7 @@ public class WeatherCommand {
         this.weatherService = weatherService;
     }
 
-    @Command(command = "bilan-hydrique", alias = "bh", description = "Génère un fichier CSV pour un copier/coller facile et sans erreur dans le fichier Excel \"Bilan Hydrique.xlsx\" de Remy. Exemple d'utilisation : \"bilan-hydrique 77 melun\"")
+    @Command(command = "bilan-hydrique", alias = "bh", description = "Genere un fichier CSV pour un copier/coller facile et sans erreur dans le fichier Excel \"Bilan Hydrique.xlsx\" de Remy. Exemple d'utilisation : \"bilan-hydrique 77 melun\"")
     public String dailyHydricReport(
             @Option(required = true, description = "Le numéro du département des stations", longNames = {"departement", "dep"}, shortNames = 'd') int departement,
             @Option(required = true, description = "Les noms des stations séparés par une virgule ','", longNames = "stations", shortNames = 's') String[] stations
@@ -33,15 +33,15 @@ public class WeatherCommand {
 
         try {
             final Path generatedFile = this.weatherService.generateDailyHydricReport(departement, stationsName);
-            message = MessageFormat.format("Le bilan hydrique a été généré et enregistré sous {0}", generatedFile.toAbsolutePath().toString());
+            message = MessageFormat.format("Le Bilan Hydrique a ete genere et enregistre sous {0}", generatedFile.toAbsolutePath().toString());
         } catch (final CSVGenerationException e) {
-            message = "Le bilan hydrique n'a pas pû être généré, demandez à Julien pourquoi (le nullos, il code avec le cul) !";
+            message = "Le Bilan Hydrique n'a pas pu être genere, demandez à Julien pourquoi (le nullos, il code avec le cul) !";
         }
 
         return message;
     }
 
-    @Command(command = "bilan_meteo", alias = "bm", description = "Génère un fichier CSV contenant les données météo quotidiennes des 2 dernières années. Exemple d'utilisation : \"bilan-meteo 77 melun\"")
+    @Command(command = "bilan_meteo", alias = { "bm", "emelyne-dheliat" }, description = "Genere un fichier CSV contenant les donnees meteo quotidiennes des 2 dernieres annees. Exemple d'utilisation : \"bilan-meteo 77 melun\"")
     public String dailyWeatherReport(
             @Option(required = true, description = "Le numéro du département des stations", longNames = {"departement", "dep"}, shortNames = 'd') int departement,
             @Option(required = true, description = "Les noms des stations séparés par une virgule ','", longNames = "stations", shortNames = 's') String[] stations
@@ -54,9 +54,9 @@ public class WeatherCommand {
 
         try {
             final Path generatedFile = this.weatherService.generateDailyWeatherReport(departement, stationsName);
-            message = MessageFormat.format("Le Bilan Météo a été généré et enregistré sous {0}", generatedFile.toAbsolutePath().toString());
+            message = MessageFormat.format("Le Bilan Meteo a ete genere et enregistre sous {0}", generatedFile.toAbsolutePath().toString());
         } catch (final CSVGenerationException e) {
-            message = "Le Bilan Météo n'a pas pû être généré, demandez à Julien pourquoi (le nullos, il code avec le cul) !";
+            message = "Le Bilan Meteo n'a pas pu etre genere, demandez à Julien pourquoi (le nullos, il code avec le cul) !";
         }
 
         return message;
