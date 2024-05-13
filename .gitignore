@@ -1,7 +1,7 @@
 HELP.md
 target/
 *.log
-Bilan Hydrique/
+Résultat/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/

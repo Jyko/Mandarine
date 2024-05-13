@@ -1,4 +1,4 @@
-package fr.pepitruc.mandarine.model.csv;
+package fr.pepitruc.mandarine.service.csv.entity;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BilanHydriqueCSVEntity implements Comparable<BilanHydriqueCSVEntity> {
+public class DailyHydricReportCsvEntity implements Comparable<DailyHydricReportCsvEntity> {
 
     @CsvBindByName(column = "0_Station")
     private String station;
@@ -29,7 +29,7 @@ public class BilanHydriqueCSVEntity implements Comparable<BilanHydriqueCSVEntity
     private double etp;
 
     @Override
-    public int compareTo(final BilanHydriqueCSVEntity o) {
+    public int compareTo(final DailyHydricReportCsvEntity o) {
 
         var stationCompare = this.getStation().compareTo(o.getStation());
         if (stationCompare == 0)

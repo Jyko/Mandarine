@@ -13,7 +13,7 @@
     <groupId>fr.pepitruc</groupId>
     <artifactId>mandarine</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Mandarine</name>
+    <name>mandarine</name>
     <description>Un outil pour les BPREA Maraichage</description>
 
     <properties>
